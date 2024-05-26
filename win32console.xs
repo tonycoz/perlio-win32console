@@ -32,7 +32,8 @@ typedef struct {
 } PerlIOW32Con;
 
 /* we largely ignore the flags at this point, but do propagate them
-   for dup
+   for dup.
+   This is PerlIOUnix_oflags() from perlio.c
 */
 int
 PerlIOW32Con_oflags(const char *mode)
@@ -200,7 +201,6 @@ PerlIOW32Con_open(pTHX_ PerlIO_funcs *self, PerlIO_list_t *layers,
             const char *path = SvPV_const(*args, len);
             if (!IS_SAFE_PATHNAME(path, len, "open"))
                 return NULL;
-	    /* FIXME: function name here */
             fd = _open(path, imode, perm);
             /*known_cloexec = 1;*/
         }
@@ -286,7 +286,7 @@ PerlIOW32Con_write(pTHX_ PerlIO *f, const void *vbuf, Size_t count)
   /* FIXME: locks */
   /* FIXME: put unconsumed bytes in workbuf and use them the next time around */
   /* FIXME: handle/discard out of range UTF-8? */
-  /* TODO: escape codes */
+  /* TODO: escape codes - might be possible with SetConsoleMode(... ENABLE_VIRTUAL_TERMINAL_PROCESSING) */
 
   PerlIOW32Con * const os = PerlIOSelf(f, PerlIOW32Con);
   LPCSTR in = vbuf;
