@@ -5,6 +5,8 @@
 #include "perliol.h"
 #include "ppport.h"
 
+#ifdef WIN32
+
 #define WORKBUF_SIZE 40
 
 typedef struct {
@@ -369,9 +371,12 @@ PERLIO_FUNCS_DECL(PerlIO_win32console) = {
     NULL,                       /* get_cnt */
     NULL,                       /* set_ptrcnt */
 };
- 
+
+#endif
 
 MODULE = PerlIO::win32console PACKAGE = PerlIO::win32console
 
 BOOT:
+#ifdef WIN32
   PerlIO_define_layer(aTHX_ (PerlIO_funcs*)&PerlIO_win32console);
+#endif

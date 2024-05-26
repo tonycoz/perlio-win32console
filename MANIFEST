@@ -5,5 +5,7 @@ MANIFEST.SKIP
 ppport.h
 README.md
 readme/demo.png
+t/00_load.t
+t/10_import.t
 win32console.pm
 win32console.xs

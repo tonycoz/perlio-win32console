@@ -1,11 +1,29 @@
 package PerlIO::win32console;
 use strict;
 use warnings;
+use Carp ();
 
 our $VERSION = "0.001";
 
 use XSLoader;
 XSLoader::load(__PACKAGE__, __PACKAGE__->VERSION);
+
+sub import {
+    # only something to do on windows
+    my ($class, @args) = @_;
+    while (@args) {
+	my $arg = shift @args;
+	if ($arg eq "-installout") {
+	    if ($^O eq "MSWin32") {
+		binmode STDOUT, ":raw:win32console" if -t STDOUT;
+		binmode STDERR, ":raw:win32console" if -t STDERR;
+	    }
+	}
+	else {
+	    Carp::croak("$class: unknown import $arg");
+	}
+    }
+}
 
 __END__
 
@@ -23,7 +41,6 @@ PerlIO::win32console - unicode console output on windows
 
   print "unicode characters\n";
 
-  # not implemented yet
   # apply :win32console to STDOUT/STDERR if they're console output
   use PerlIO::win32console "-installout";
   # apply :win32console to STDIN if it's a console
@@ -36,6 +53,15 @@ PerlIO::win32console - unicode console output on windows
 
 Implements UTF-8 output to the Win32 console, using the wide character
 console APIs.
+
+You can load the module with C<-installout> to automatically push this
+layer onto STDOUT/STDERR on Windows:
+
+  use PerlIO::win32console "-installout";
+
+but do nothing on non-Windows.
+
+The PerlIO layer is only ever available on Windows.
 
 Future possibilities:
 
