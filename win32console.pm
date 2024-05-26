@@ -49,7 +49,7 @@ PerlIO::win32console - unicode console output on windows
   # consoles
   use PerlIO::win32console "-install";
 
--head1 DESCRIPTION
+=head1 DESCRIPTION
 
 Implements UTF-8 output to the Win32 console, using the wide character
 console APIs.
