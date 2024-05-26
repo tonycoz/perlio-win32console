@@ -294,6 +294,8 @@ PerlIOW32Con_write(pTHX_ PerlIO *f, const void *vbuf, Size_t count)
   if (wcount > os->outbuf_size) {
     /* out of space, expand and try again */
     unsigned newsize = os->outbuf_size ? os->outbuf_size * 2 : WORKBUF_SIZE;
+    if (newsize < wcount)
+      newsize = wcount;
     os->outbuf = PerlMemShared_realloc(os->outbuf, newsize * sizeof(wchar_t));
     os->outbuf_size = newsize;
 
