@@ -13,7 +13,7 @@ WriteMakefile
    OBJECT => "win32console.o",
    LICENSE => "perl_5",
    AUTHOR => 'Tony Cook >tony@develop-help.com>',
-   CCFLAGS => "$Config{ccflags} -Wall -Wextra",
+   #CCFLAGS => "$Config{ccflags} -Wall -Wextra",
    ABSTRACT => 'Win32 console output layer',
    #
    META_MERGE =>
