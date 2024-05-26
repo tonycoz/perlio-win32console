@@ -9,6 +9,10 @@
 
 #define WORKBUF_SIZE 40
 
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+#endif
+
 typedef struct {
   struct _PerlIO base;
 
