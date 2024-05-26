@@ -151,6 +151,9 @@ PerlIOW32Con_pushed(pTHX_ PerlIO* f, const char* mode, SV* arg,
     errno = ENOTTY;
     return -1;
   }
+
+  cmode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+  SetConsoleMode(con->h, cmode);
   PerlIOBase(f)->flags |= PERLIO_F_UTF8 | PERLIO_F_OPEN;
 
   return 0;
