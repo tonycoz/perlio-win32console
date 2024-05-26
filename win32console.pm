@@ -69,11 +69,15 @@ Future possibilities:
 
 =item *
 
-input from the console
+text input from the console
 
 =item *
 
-handling ANSI escapes
+non-text (mouse, resizes) input from the console
+
+=item *
+
+handling ANSI escapes (Windows has an option do this itself)
 
 =back
 
