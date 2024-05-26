@@ -61,6 +61,9 @@ layer onto STDOUT/STDERR on Windows:
 
 but do nothing on non-Windows.
 
+When this layer is pushed this module attempts to enable ANSI escapes
+for that console.
+
 The PerlIO layer is only ever available on Windows.
 
 Future possibilities:
