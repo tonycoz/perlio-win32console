@@ -153,6 +153,20 @@ PerlIOW32Con_pushed(pTHX_ PerlIO* f, const char* mode, SV* arg,
   return 0;
 }
 
+IV
+PerlIOW32Con_popped(pTHX_ PerlIO *f)
+{
+  PerlIOW32Con * const os = PerlIOSelf(f, PerlIOW32Con);
+  PERL_UNUSED_CONTEXT;
+  
+  if (os->outbuf) {
+    PerlMemShared_free(os->outbuf);
+    os->outbuf = NULL;
+    os->outbuf_size = 0;
+  }
+  return 0;
+}
+
 static void
 PerlIOW32Con_setfd(pTHX_ PerlIO *f, int fd) {
   PerlIOSelf(f, PerlIOW32Con)->fd = fd;  
@@ -280,7 +294,7 @@ PerlIOW32Con_write(pTHX_ PerlIO *f, const void *vbuf, Size_t count)
   if (wcount > os->outbuf_size) {
     /* out of space, expand and try again */
     unsigned newsize = os->outbuf_size ? os->outbuf_size * 2 : WORKBUF_SIZE;
-    Renew(os->outbuf, newsize, wchar_t);
+    os->outbuf = PerlMemShared_realloc(os->outbuf, newsize * sizeof(wchar_t));
     os->outbuf_size = newsize;
 
     wcount = MultiByteToWideChar(CP_UTF8, 0, in, count, os->outbuf, os->outbuf_size);
@@ -329,7 +343,7 @@ PERLIO_FUNCS_DECL(PerlIO_win32console) = {
     sizeof(PerlIOW32Con),
     PERLIO_K_RAW,
     PerlIOW32Con_pushed,
-    PerlIOBase_popped,
+    PerlIOW32Con_popped,
     PerlIOW32Con_open,
     PerlIOBase_binmode,         /* binmode */
     NULL,
