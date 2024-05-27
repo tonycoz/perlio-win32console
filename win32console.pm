@@ -43,6 +43,8 @@ PerlIO::win32console - unicode console output on windows
 
   # apply :win32console to STDOUT/STDERR if they're console output
   use PerlIO::win32console "-installout";
+
+  # the following isn't implemented yet
   # apply :win32console to STDIN if it's a console
   use PerlIO::win32console "-installin";
   # apply :win32console to any of STDIN, STDOUT, STDERR if they're
@@ -77,10 +79,6 @@ text input from the console
 =item *
 
 non-text (mouse, resizes) input from the console
-
-=item *
-
-handling ANSI escapes (Windows has an option do this itself)
 
 =back
 
