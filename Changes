@@ -1,5 +1,12 @@
 Revision history for perl module PerlIO::win32console
 
+
+ - minor documentation fixes
+
+ - only load the XS module on Windows, it isn't needed anywhere else.
+   I attempted to avoid building it, but EU::CB really really wants
+   to build the dynamic object when you have an XS file.
+
 0.001 2024-05-26
 
  - initial release
