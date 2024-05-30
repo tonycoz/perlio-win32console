@@ -9,13 +9,13 @@ use ExtUtils::MakeMaker v6.46;
 WriteMakefile
   (
    NAME => "PerlIO::win32console",
-   VERSION_FROM => "win32console.pm",
-   OBJECT => "win32console.o",
+   VERSION_FROM => "win32console_pm.PL",
    LICENSE => "perl_5",
    AUTHOR => 'Tony Cook >tony@develop-help.com>',
+   PL_FILES => { 'win32console_pm.PL' => 'win32console.pm' },
+   PM => {'win32console.pm' => '$(INST_LIBDIR)/win32console.pm'},
    #CCFLAGS => "$Config{ccflags} -Wall -Wextra",
    ABSTRACT => 'Win32 console output layer',
-   #
    META_MERGE =>
    {
     'meta-spec' =>
@@ -38,4 +38,5 @@ WriteMakefile
      },
     },
    },
-  )
+  );
+

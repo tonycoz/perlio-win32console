@@ -8,6 +8,7 @@ win32console.obj
 win32console.c
 win32console.def
 win32console.bs
+win32console.pm
 blib
 *~
 *.bak

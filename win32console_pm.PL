@@ -1,23 +1,51 @@
+use strict;
+use warnings;
+my $is_win32 = $^O eq "MSWin32";
+
+my $outname = shift
+    or die "No output name supplied\n";
+
+open my $fh, ">", $outname
+    or die "Cannot create '$outname': $!\n";
+binmode $fh;
+
+print $fh <<'EOS';
 package PerlIO::win32console;
 use strict;
 use warnings;
 use Carp ();
 
 our $VERSION = "0.001";
+EOS
 
+if ($is_win32) {
+    print $fh <<'EOS';
 use XSLoader;
 XSLoader::load(__PACKAGE__, __PACKAGE__->VERSION);
 
+EOS
+}
+
+print $fh <<'EOS';
 sub import {
     # only something to do on windows
     my ($class, @args) = @_;
     while (@args) {
 	my $arg = shift @args;
 	if ($arg eq "-installout") {
-	    if ($^O eq "MSWin32") {
-		binmode STDOUT, ":raw:win32console" if -t STDOUT;
-		binmode STDERR, ":raw:win32console" if -t STDERR;
-	    }
+EOS
+if ($is_win32) {
+    print $fh <<'EOS';
+            binmode STDOUT, ":raw:win32console" if -t STDOUT;
+	    binmode STDERR, ":raw:win32console" if -t STDERR;
+EOS
+}
+else {
+    print $fh <<'EOS';
+            # only active on windows
+EOS
+}
+print $fh <<'EOS';
 	}
 	else {
 	    Carp::croak("$class: unknown import $arg");
@@ -91,3 +119,5 @@ Tony Cook <tony@develop-help.com>
 Win32::Console::ANSI
 
 =cut
+
+EOS

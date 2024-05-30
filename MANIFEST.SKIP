@@ -1,7 +1,7 @@
 \.o$
 \.obj$
 Makefile$
-win32console\.(o|obj|def|c|bs)
+win32console\.(o|obj|def|c|bs|pm)
 MYMETA\.
 ^pm_to_blib$
 ^blib/
