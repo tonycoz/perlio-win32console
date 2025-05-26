@@ -2,7 +2,7 @@
 
 This is a PerlIO layer intended for use with the Win32 console.
 
-The layer accepts normal text, including wide characters, as :utf8 and
+The layer accepts normal text including wide characters as :utf8 and
 :encoding() do and calls the Win32 console APIs to write wide
 characters instead of ANSI.
 
